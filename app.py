@@ -1,8 +1,9 @@
-from flask import Flask
-from config import DevelopmentConfig, ProductionConfig
-
-# Choose Config based on environment
 import os
+from flask import Flask
+
+from config import DevelopmentConfig, ProductionConfig
+from controllers.product_controller import product_bp
+
 
 env = os.getenv("FLASK_ENV", "development")
 
@@ -14,10 +15,6 @@ else:
 # Initialize Flask App
 app = Flask(__name__)
 app.config.from_object(config_class)
-
-# Import blueprints
-from controllers.product_controller import product_bp
-
 app.register_blueprint(product_bp)
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 import pymongo
-from config import get_config
+from config import Config
 
 
 class DatabaseConnection:
@@ -8,7 +8,7 @@ class DatabaseConnection:
     def __new__(cls):
         if not cls._instance:
             cls._instance = super().__new__(cls)
-            config = get_config()
+            config = Config
 
             try:
                 # Connect to MongoDB
@@ -18,7 +18,6 @@ class DatabaseConnection:
                 # Create products collection with indexes
                 cls._instance.products_collection = cls._instance.db["products"]
 
-                # Create indexes for efficient querying
                 cls._instance.products_collection.create_index(
                     [("category", pymongo.ASCENDING)]
                 )
